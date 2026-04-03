@@ -1,8 +1,127 @@
 {
   "workspace": "alaskafyi-json",
-  "description": "Curated public JSON artifacts from the monorepo (apps/json/public). HTML build passthrough → /json/ on ALASKA.FYI.",
-  "related": {
-    "alerts": "/data/alerts.json",
-    "gazetteer": "/data/gazetteer/"
-  }
+  "catalogVersion": "1.1.0",
+  "title": "ALASKA.FYI — public JSON catalog",
+  "description": "Machine-readable index of open datasets and feeds published with the site. This file lives in the public JSON workspace (monorepo apps/json/public) and is deployed to https://alaska.fyi/json/index.json. No secrets; CC/licensed third-party text is documented on pages.",
+  "canonicalBaseUrl": "https://alaska.fyi",
+  "jsonWorkspaceUrl": "https://alaska.fyi/json/index.json",
+  "repositories": {
+    "thisPublicMirror": "https://github.com/alaskafyi/alaskafyi-json",
+    "siteSourcePrivate": "https://github.com/alaskafyi/alaskafyi-web",
+    "publicJsonFolder": "https://github.com/alaskafyi/alaskafyi-json/tree/main/public"
+  },
+  "deployment": {
+    "edge": "Cloudflare Pages",
+    "buildNote": "Eleventy copies ../json/public → /json/; gazetteer JSON is emitted from apps/web/src/_data via *.json.njk templates; src/data passthrough → /data/."
+  },
+  "feeds": {
+    "siteMeta": {
+      "id": "site-meta",
+      "path": "/site-meta.json",
+      "url": "https://alaska.fyi/site-meta.json",
+      "role": "Build metadata and gazetteer datasetVersion stamps for lakes/mountains/bays/towns/villages."
+    },
+    "alerts": {
+      "id": "alerts",
+      "path": "/data/alerts.json",
+      "url": "https://alaska.fyi/data/alerts.json",
+      "schemaPath": "/data/alerts.schema.json",
+      "schemaUrl": "https://alaska.fyi/data/alerts.schema.json",
+      "role": "Canonical on-site alerts feed for /alerts/ UI (fish, roads, regional slugs, optional town_slugs)."
+    },
+    "gazetteer": {
+      "id": "gazetteer-bundle",
+      "hubPath": "/gazetteer/",
+      "hubUrl": "https://alaska.fyi/gazetteer/",
+      "description": "Hybrid gazetteer: static HTML entity pages plus these JSON feeds for explorers and mirrors.",
+      "datasets": [
+        {
+          "id": "lakes",
+          "path": "/data/gazetteer/lakes.json",
+          "url": "https://alaska.fyi/data/gazetteer/lakes.json",
+          "manifestPath": "/data/gazetteer/lakes-manifest.json",
+          "manifestUrl": "https://alaska.fyi/data/gazetteer/lakes-manifest.json",
+          "role": "Lake entities; manifest supports chunked _data for large ingests. Explorer: /gazetteer/lakes/explore/"
+        },
+        {
+          "id": "mountains",
+          "path": "/data/gazetteer/mountains.json",
+          "url": "https://alaska.fyi/data/gazetteer/mountains.json",
+          "role": "GNIS summits; detail /mountains/{slug}/"
+        },
+        {
+          "id": "bays",
+          "path": "/data/gazetteer/bays.json",
+          "url": "https://alaska.fyi/data/gazetteer/bays.json",
+          "role": "GNIS bays / marine features; detail /bays/{slug}/"
+        },
+        {
+          "id": "towns",
+          "path": "/data/gazetteer/towns.json",
+          "url": "https://alaska.fyi/data/gazetteer/towns.json",
+          "role": "GNIS populated places routed as towns; detail /town/{slug}/"
+        },
+        {
+          "id": "villages",
+          "path": "/data/gazetteer/villages.json",
+          "url": "https://alaska.fyi/data/gazetteer/villages.json",
+          "role": "GNIS villages; detail /village/{slug}/"
+        },
+        {
+          "id": "birds",
+          "path": "/data/gazetteer/birds.json",
+          "url": "https://alaska.fyi/data/gazetteer/birds.json",
+          "role": "Bird taxa for /bird/ pages and optional town sighting lists."
+        }
+      ]
+    }
+  },
+  "routingExamples": {
+    "gazetteerLakes": "https://alaska.fyi/gazetteer/lakes/{slug}/",
+    "towns": "https://alaska.fyi/town/{slug}/",
+    "mountains": "https://alaska.fyi/mountains/{slug}/",
+    "note": "Path segments are URL-safe slugs derived from GNIS names, not opaque IDs."
+  },
+  "clientLibraries": {
+    "slugify": "/lib/slugify.js",
+    "formatDate": "/lib/format-date.js",
+    "alaskaFyiNamespace": "window.AlaskaFyi on select pages"
+  },
+  "partnerSchemaReferences": {
+    "description": "JSON Schema shapes for ecosystem partners (AFCA, TrueTopo, AlaskaIntel) — documentation alignment; not all are runtime API in this repo.",
+    "docsPathInSiteRepo": "docs/schemas/",
+    "files": [
+      "afca-river.json",
+      "afca-species.json",
+      "afca-location.json",
+      "truetopo-claim.json",
+      "truetopo-district.json",
+      "intel-emergency-order.json",
+      "intel-road-closure.json"
+    ],
+    "rawBaseUrl": "https://raw.githubusercontent.com/alaskafyi/alaskafyi-web/main/docs/schemas/"
+  },
+  "thinHubRoutes": {
+    "fishing": "/fishing/",
+    "maps": "/maps/",
+    "intel": "/intel/",
+    "alerts": "/alerts/",
+    "modeDemo": "/mode-demo/"
+  },
+  "documentation": [
+    {
+      "title": "Repositories and data plane",
+      "url": "https://github.com/alaskafyi/alaskafyi-web/blob/main/docs/data/repos-and-data-plane.md"
+    },
+    {
+      "title": "Gazetteer architecture",
+      "url": "https://github.com/alaskafyi/alaskafyi-web/blob/main/docs/gazetteer-architecture.md"
+    },
+    {
+      "title": "Partner schemas folder",
+      "url": "https://github.com/alaskafyi/alaskafyi-web/tree/main/docs/schemas"
+    }
+  ],
+  "license": "MIT",
+  "updated": "2026-04-03"
 }

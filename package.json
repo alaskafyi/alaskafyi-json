@@ -1,0 +1,8 @@
+{
+  "name": "alaskafyi-json",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public JSON datasets and schemas (mirror or supplement /data on alaska.fyi)",
+  "license": "MIT",
+  "type": "module"
+}

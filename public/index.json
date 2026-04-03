@@ -1,6 +1,6 @@
 {
   "workspace": "alaskafyi-json",
-  "description": "Curated public JSON artifacts from the monorepo (apps/json/public). HTML build passthrough → /json/ on alaska.fyi.",
+  "description": "Curated public JSON artifacts from the monorepo (apps/json/public). HTML build passthrough → /json/ on ALASKA.FYI.",
   "related": {
     "alerts": "/data/alerts.json",
     "gazetteer": "/data/gazetteer/"
